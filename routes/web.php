@@ -6,6 +6,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PhotoController;
 
 
 /*
@@ -19,15 +24,15 @@ use App\Http\Controllers\WelcomeController;
 |
 */
 
-Route::get('/hello', [WelcomeController::class,'hello']);
+Route::get('/hello', [WelcomeController::class, 'hello']);
 
-Route::get('mahasiswa', function ($id) { });
-Route::post('mahasiswa', function ($id) { });
-Route::put('mahasiswa', function ($id) { });
-Route::delete('mahasiswa', function($id) { });
-Route::get('mahasiswa/{id}', function ($id) { });
-Route::put('mahasiswa/{id}', function ($id) { });
-Route::delete('mahasiswa/{id}', function ($id) { });
+Route::get('mahasiswa', function ($id) {});
+Route::post('mahasiswa', function ($id) {});
+Route::put('mahasiswa', function ($id) {});
+Route::delete('mahasiswa', function ($id) {});
+Route::get('mahasiswa/{id}', function ($id) {});
+Route::put('mahasiswa/{id}', function ($id) {});
+Route::delete('mahasiswa/{id}', function ($id) {});
 
 
 Route::get('/hello', function () {
@@ -119,3 +124,26 @@ Route::redirect('/here', '/there');
 
 Route::view('/welcome', 'welcome');
 Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+
+
+Route::get('/', [PageController::class, 'index']);
+Route::get('/about', [PageController::class, 'about']);
+Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+
+Route::get('/', HomeController::class);
+Route::get('/about', AboutController::class);
+Route::get('/articles/{id}', ArticleController::class);
+
+Route::resource('photos', PhotoController::class);
+
+Route::resource('photos', PhotoController::class)->only([
+    'index',
+    'show'
+]);
+Route::resource('photos', PhotoController::class)->except([
+    'create',
+    'store',
+    'update',
+    'destroy'
+]);
